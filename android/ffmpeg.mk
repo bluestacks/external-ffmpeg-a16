@@ -12,15 +12,9 @@ FFMPEG_ARCH := $(TARGET_ARCH)
 
 FFMPEG_2ND_ARCH := false
 ifneq ($(TARGET_2ND_ARCH_VARIANT),)
-   ifeq ($(TARGET_PREFER_32_BIT_APPS),true)
-       ifeq ($(FFMPEG_MULTILIB),64)
-          FFMPEG_2ND_ARCH := true
-       endif
-   else
        ifeq ($(FFMPEG_MULTILIB),32)
           FFMPEG_2ND_ARCH := true
        endif
-   endif
 endif
 
 ifeq ($(FFMPEG_2ND_ARCH), true)

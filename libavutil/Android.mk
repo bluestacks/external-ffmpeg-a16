@@ -23,6 +23,8 @@ LOCAL_C_INCLUDES += bionic/libc/include
 
 LOCAL_MULTILIB := $(FFMPEG_MULTILIB)
 
+LOCAL_CFLAGS += -isystem $(LOCAL_PATH)
+
 include $(BUILD_SHARED_LIBRARY)
 
 
@@ -39,5 +41,7 @@ endif
 LOCAL_C_INCLUDES += bionic/libc/include
 
 LOCAL_MULTILIB := $(FFMPEG_MULTILIB)
+
+LOCAL_CFLAGS += -isystem $(LOCAL_PATH)
 
 include $(BUILD_SHARED_LIBRARY)
