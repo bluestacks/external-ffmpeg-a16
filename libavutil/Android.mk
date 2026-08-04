@@ -10,6 +10,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
+ifneq ($(TARGET_ARCH),x86_64)
 FFMPEG_MULTILIB := 32
 include $(LOCAL_PATH)/../android/build.mk
 
@@ -26,6 +27,7 @@ LOCAL_MULTILIB := $(FFMPEG_MULTILIB)
 LOCAL_CFLAGS += -isystem $(LOCAL_PATH)
 
 include $(BUILD_SHARED_LIBRARY)
+endif
 
 
 

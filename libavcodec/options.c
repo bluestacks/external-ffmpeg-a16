@@ -213,6 +213,12 @@ FF_ENABLE_DEPRECATION_WARNINGS
     avctx->extradata_size = 0;
 }
 
+static void zero_padding(void *buffer, size_t size)
+{
+    if (size > 0)
+        memset(buffer, 0, size);
+}
+
 int avcodec_copy_context(AVCodecContext *dest, const AVCodecContext *src)
 {
     const AVCodec *orig_codec = dest->codec;
@@ -265,8 +271,7 @@ FF_ENABLE_DEPRECATION_WARNINGS
         if (!dest->obj) \
             goto fail; \
         memcpy(dest->obj, src->obj, size); \
-        if (pad) \
-            memset(((uint8_t *) dest->obj) + size, 0, pad); \
+        zero_padding(((uint8_t *) dest->obj) + size, pad); \
     }
     alloc_and_copy_or_fail(extradata,    src->extradata_size,
                            AV_INPUT_BUFFER_PADDING_SIZE);
