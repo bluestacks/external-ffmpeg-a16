@@ -1304,7 +1304,7 @@
 #ifdef HAVE_AS_FUNC
 #undef HAVE_AS_FUNC
 #endif
-#define HAVE_AS_FUNC 1
+#define HAVE_AS_FUNC 0
 #ifdef HAVE_AS_OBJECT_ARCH
 #undef HAVE_AS_OBJECT_ARCH
 #endif

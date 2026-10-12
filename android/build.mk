@@ -26,6 +26,12 @@ $(foreach V,$(FF_VARS),$(eval $(call RESET,$(V))))
 SUBDIR := $(FFDROID_DIR)/include/
 include $(FFDROID_DIR)/config.mak
 include $(LOCAL_PATH)/Makefile $(wildcard $(LOCAL_PATH)/$(FFMPEG_ARCH_DIR)/Makefile)
+# arm/aarch64: the NEON intrinsics shims (e.g. neon/mpegvideo.o providing
+# ff_mpv_common_init_neon) have their own Makefile nobody included; x86 never
+# needs them (HAVE_NEON=0).
+ifeq ($(filter x86 x86_64,$(FFMPEG_ARCH)),)
+include $(wildcard $(LOCAL_PATH)/neon/Makefile)
+endif
 include $(FFMPEG_DIR)ffbuild/arch.mak
 
 # remove duplicate objects
@@ -77,6 +83,6 @@ LOCAL_LDFLAGS := -Wl,--no-fatal-warnings -Wl,-Bsymbolic
 LOCAL_LDFLAGS_x86 := -Wl,-z,notext
 
 LOCAL_CLANG_CFLAGS += -Wno-unknown-attributes
-LOCAL_CLANG_ASFLAGS += $(if $(filter x86,$(FFMPEG_ARCH_DIR)),,-no-integrated-as)
+LOCAL_CLANG_ASFLAGS += $(if $(filter x86 aarch64,$(FFMPEG_ARCH_DIR)),,-no-integrated-as)
 
 LOCAL_SHARED_LIBRARIES := $($(NAME)_FFLIBS:%=lib%)
